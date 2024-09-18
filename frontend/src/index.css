@@ -1,0 +1,22 @@
+#root {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+body {
+  background-color: #781998;
+  margin: 0;
+  display: flex;
+  min-width: 320px;
+  min-height: 100vh;
+  flex: 1;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}
