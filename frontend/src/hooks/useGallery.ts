@@ -13,7 +13,7 @@ export const useGallery = (updater: boolean) => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await fetch("/api/images");
+        const response = await fetch("http://localhost:3001/images");
         setImages((await response.json()) as Image[]);
       } catch (error) {
         console.error(JSON.stringify(error, null, 2));

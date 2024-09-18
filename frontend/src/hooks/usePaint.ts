@@ -18,6 +18,12 @@ export const usePaint = (refresh: () => void) => {
   const [isDrawing, setIsDrawing] = useState(false);
   const [color, setColor] = useState("#000");
   const [size, setSize] = useState(2);
+  const [title, setTitle] = useState("Untitled");
+
+  const setTitleCallback = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value),
+    [setTitle],
+  );
 
   const handleSizeChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => setSize(+e.target.value),
@@ -68,24 +74,24 @@ export const usePaint = (refresh: () => void) => {
     setIsDrawing(false);
   };
 
-  const sendImageToBackend = async () => {
+  const sendImageToBackend = useCallback(async () => {
     const canvas = canvasRef.current!;
     const imageDataUrl = canvas.toDataURL("image/png");
 
     try {
-      await fetch("/api/upload", {
+      await fetch("http://localhost:3001/images", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({image: imageDataUrl}),
+        body: JSON.stringify({dataString: imageDataUrl, title}),
       });
       clear();
-      refresh();
+      setTimeout(refresh, 1200);
     } catch (error) {
       console.error(JSON.stringify(error, null, 2));
     }
-  };
+  }, [clear, refresh, title]);
 
   return {
     color,
@@ -99,5 +105,7 @@ export const usePaint = (refresh: () => void) => {
     clear,
     size,
     COLORS,
+    title,
+    setTitle: setTitleCallback,
   };
 };

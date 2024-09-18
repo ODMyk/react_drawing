@@ -18,6 +18,8 @@ export const Paint = ({refresh}: PaintProps) => {
     clear,
     size,
     COLORS,
+    title,
+    setTitle,
   } = usePaint(refresh);
 
   return (
@@ -31,7 +33,7 @@ export const Paint = ({refresh}: PaintProps) => {
             onMouseDown={startDrawing}
             onMouseMove={draw}
             onMouseUp={stopDrawing}
-            style={{padding: 0, margin: 0}}
+            onMouseOut={stopDrawing}
           />
         </div>
         <div className="toolbar">
@@ -53,6 +55,7 @@ export const Paint = ({refresh}: PaintProps) => {
               value={size}
               onChange={handleSizeChange}
             />
+            <input type="text" value={title} onChange={setTitle} />
           </div>
           <button onClick={clear}>Clear</button>
           <button onClick={sendImageToBackend}>Publish</button>

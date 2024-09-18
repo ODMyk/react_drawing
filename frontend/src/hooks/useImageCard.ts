@@ -5,7 +5,7 @@ export const useImageCard = (refresh: () => void) => {
     async (id: number) => {
       const title = prompt("Enter new title:");
       try {
-        await fetch(`/api/${id}`, {
+        await fetch(`http://localhost:3001/images/${id}`, {
           method: "PATCH",
           body: JSON.stringify({title}),
           headers: {"Content-Type": "application/json"},
@@ -21,7 +21,7 @@ export const useImageCard = (refresh: () => void) => {
   const deleteImage = useCallback(
     async (id: number) => {
       try {
-        await fetch(`/api/${id}`, {
+        await fetch(`http://localhost:3001/images/${id}`, {
           method: "DELETE",
         });
         refresh();
